@@ -32,7 +32,7 @@ namespace ReportApp_Repositories.Categories
 
         public void UpdateCategory(Category category)
         {
-            _context.SetEntityState<Category>(category,EntityState.Modified);
+            _context.SetEntityState(category,EntityState.Modified);
             _context.SaveChanges();
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO.Compression;
 using System.Linq;
@@ -11,12 +12,13 @@ namespace ReportApp_Models
 {
     public class Category
     {
+        [Key]
         public int CategoryID { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
 
         [JsonIgnore]
-        public byte[] Picture { get; set; }
+        public string Picture { get; set; }
 
         //public ICollection<Product> Products { get; set; }        
     }
