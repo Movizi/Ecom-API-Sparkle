@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ReportApp_Models
@@ -27,8 +28,9 @@ namespace ReportApp_Models
         public int? ReportsTo { get; set; }
         public string PhotoPath { get; set; }
 
-        public ICollection<Employee> Subordinates { get; set; }
-        public Employee Manager { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        //public ICollection<Employee> Subordinates { get; set; }
+        //[JsonIgnore]
+        //public Employee Manager { get; set; }
+        //public ICollection<Order> Orders { get; set; }
     }
 }
