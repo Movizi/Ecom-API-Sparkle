@@ -11,6 +11,7 @@ namespace ReportApp_Repositories
     public interface IDbContext
     {
         DbSet<Category> Categories { get; set; }
+        DbSet<Product> Products { get; set; }
 
         void SaveChanges();
         void SetEntityState<T>(T entity, EntityState state) where T : class;
