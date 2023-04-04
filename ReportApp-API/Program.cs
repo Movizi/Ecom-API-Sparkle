@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ReportApp_API.Data;
 using ReportApp_Repositories;
 using ReportApp_Repositories.Categories;
+using ReportApp_Repositories.Employees;
 using ReportApp_Repositories.Products;
 using System;
 
@@ -31,6 +32,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Add scoped
 builder.Services.AddScoped<IDbContext, AppDbContext>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 // AutoMapper

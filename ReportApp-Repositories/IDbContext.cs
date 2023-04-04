@@ -11,6 +11,7 @@ namespace ReportApp_Repositories
     public interface IDbContext
     {
         DbSet<Category> Categories { get; set; }
+        DbSet<Employee> Employees { get; set; }
         DbSet<Product> Products { get; set; }
 
         void SaveChanges();

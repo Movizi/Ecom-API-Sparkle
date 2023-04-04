@@ -9,6 +9,7 @@ namespace ReportApp_Models
 {
     public class Product
     {
+        [Key]
         public int ProductID { get; set; }
 
         [Required]
