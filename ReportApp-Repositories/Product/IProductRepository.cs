@@ -10,8 +10,8 @@ namespace ReportApp_Repositories.Products
     public interface IProductRepository
     {
         IEnumerable<Product> GetAllProducts();
-        IEnumerable<Product> GetProductsByCategory(string categoryName);
-
+        IEnumerable<Product> GetProductsByCategory(int category);
+        void AddProduct(Product product);
         //Category GetCategoryById(int categoryId);
         //void AddCategory(Category category);
         //void UpdateCategory(Category category);

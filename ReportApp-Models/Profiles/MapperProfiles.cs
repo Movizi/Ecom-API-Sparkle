@@ -16,16 +16,7 @@ namespace ReportApp_Models.Profiles
             CreateMap<CategoryDto, Category>().ReverseMap();
 
             // Product Map
-            CreateMap<ProductDto, Product>()
-                .ReverseMap()
-                .ForMember(
-                    dest => dest.Category,
-                    opt => opt.MapFrom(src => src.Category.CategoryName)
-                )
-                .ForMember(
-                    dest => dest.Supplier,
-                    opt => opt.MapFrom(src => src.Supplier.CompanyName)
-                );
+            CreateMap<ProductDto, Product>().ReverseMap();
 
         }
     }

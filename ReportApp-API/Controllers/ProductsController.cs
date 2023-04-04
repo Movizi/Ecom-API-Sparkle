@@ -32,11 +32,38 @@ namespace ReportApp_API.Controllers
             return products;
         }
 
-        [HttpGet("{categoryName}")]
-        public IEnumerable<ProductDto> GetProductsByCategory(string categoryName)
+        [HttpGet("{categoryId}")]
+        public IEnumerable<ProductDto> GetProductsByCategory(int categoryId)
         {
-            var products = _mapper.Map<List<ProductDto>>(_productRepository.GetProductsByCategory(categoryName));
+            var products = _mapper.Map<List<ProductDto>>(_productRepository.GetProductsByCategory(categoryId));
             return products;
+        }
+
+        [HttpPost]
+        public ActionResult<Product> CreateProduct([FromBody] Product product)
+        {
+            try
+            {
+                if (product == null)
+                {
+                    return BadRequest("category object is null");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid model Object");
+                }
+
+
+                _productRepository.AddProduct(product);
+
+                return CreatedAtAction(nameof(CreateProduct), new { id = product.ProductID }, product);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Exception: {ex}");
+                return StatusCode(500, $"Internal server error {ex}");
+            }
         }
     }
 }

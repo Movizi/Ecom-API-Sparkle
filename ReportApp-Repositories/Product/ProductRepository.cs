@@ -20,19 +20,21 @@ namespace ReportApp_Repositories.Products
 
         public IEnumerable<Product> GetAllProducts()
         {
+            return _context.Products.ToList();
+        }
+
+        public IEnumerable<Product> GetProductsByCategory(int category)
+        {
             return _context.Products
-                .Include(x => x.Category)
-                .Include(x => x.Supplier)
+                .Where(x => x.CategoryID == category)
                 .ToList();
         }
 
-        public IEnumerable<Product> GetProductsByCategory(string categoryName)
+        public void AddProduct(Product product)
         {
-            return _context.Products
-                .Include(x => x.Category)
-                .Include(x => x.Supplier)
-                .Where(x => x.Category.CategoryName.Contains(categoryName))
-                .ToList();
+            _context.Products.Add(product);
+            _context.SaveChanges();
         }
+
     }
 }
