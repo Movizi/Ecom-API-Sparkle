@@ -30,11 +30,28 @@ namespace ReportApp_Repositories.Products
                 .ToList();
         }
 
+        public Product GetProductById(int productId) 
+        {
+            return _context.Products.FirstOrDefault(x => x.ProductID == productId);
+        }
+
         public void AddProduct(Product product)
         {
             _context.Products.Add(product);
             _context.SaveChanges();
         }
 
+        public void UpdateProduct(Product product)
+        {
+            _context.SetEntityState(product, EntityState.Modified);
+            _context.SaveChanges();
+        }
+
+        public void DeleteProduct(int productId)
+        {
+            var product = _context.Products.Find(productId);
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+        }
     }
 }

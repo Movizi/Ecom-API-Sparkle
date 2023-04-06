@@ -11,10 +11,10 @@ namespace ReportApp_Repositories.Products
     {
         IEnumerable<Product> GetAllProducts();
         IEnumerable<Product> GetProductsByCategory(int category);
+        Product GetProductById(int productId);
         void AddProduct(Product product);
-        //Category GetCategoryById(int categoryId);
-        //void AddCategory(Category category);
-        //void UpdateCategory(Category category);
-        //void DeleteCategory(int categoryId);
+        void UpdateProduct(Product product);
+        void DeleteProduct(int productId);
+
     }
 }

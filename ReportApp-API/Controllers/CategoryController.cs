@@ -8,6 +8,7 @@ using ReportApp_Repositories.Categories;
 
 namespace ReportApp_API.Controllers
 {
+    [Tags("Part I: Categories")]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -26,6 +27,10 @@ namespace ReportApp_API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all categories
+        /// </summary>
+        /// <returns>List of categories</returns>
         // GET: api/Category
         [HttpGet]
         public IEnumerable<Category> GetCategories()
@@ -33,6 +38,11 @@ namespace ReportApp_API.Controllers
             return _categoryRepository.GetAllCategories();
         }
 
+        /// <summary>
+        /// Get a specific category by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Category by Id</returns>
         // GET: api/Category/5
         [HttpGet("{id}")]
         public ActionResult<Category> GetCategory(int id)
@@ -47,6 +57,11 @@ namespace ReportApp_API.Controllers
             return category;
         }
 
+        /// <summary>
+        /// Create a new category
+        /// </summary>
+        /// <param name="categoryDto"></param>
+        /// <returns>The newly created category</returns>
         // POST: api/Category
         [HttpPost]
         public ActionResult<Category> CreateCategory([FromBody] CategoryDto categoryDto)
@@ -77,9 +92,15 @@ namespace ReportApp_API.Controllers
 
         }
 
+        /// <summary>
+        /// Update existing category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="category"></param>
+        /// <returns>Newly updated category</returns>
         // PUT: api/Category/5
         [HttpPut("{id}")]
-        public IActionResult UpdateCategory(int id, [FromBody] Category category)
+        public ActionResult<Category> UpdateCategory(int id, [FromBody] Category category)
         {
             try
             {
@@ -100,7 +121,7 @@ namespace ReportApp_API.Controllers
 
                 _categoryRepository.UpdateCategory(category);
 
-                return NoContent();
+                return Ok(category);
             }
             catch (Exception ex)
             {
@@ -109,6 +130,11 @@ namespace ReportApp_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a category
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>No content</returns>
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)

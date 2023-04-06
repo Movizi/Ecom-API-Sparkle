@@ -23,11 +23,12 @@ namespace ReportApp_API.Controllers
             _logger = logger;
             _mapper = mapper;
         }
+
         // GET: api/Employee
-        [HttpGet]
-        public IEnumerable<Employee> GetEmployees()
-        {
-            return _employeeRepository.GetAllEmployees();
-        }
+        //[HttpGet]
+        //public IEnumerable<Employee> GetEmployees()
+        //{
+        //    return _employeeRepository.GetAllEmployees();
+        //}
     }
 }
