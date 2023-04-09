@@ -18,6 +18,8 @@ namespace ReportApp_Models.Profiles
             // Product Map
             CreateMap<ProductDto, Product>().ReverseMap();
 
+            // Shipper Map
+            CreateMap<ShipperDto, Shipper>().ReverseMap();
         }
     }
 }

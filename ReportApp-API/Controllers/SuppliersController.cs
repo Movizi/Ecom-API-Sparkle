@@ -8,15 +8,15 @@ namespace ReportApp_API.Controllers
     [Tags("Part III: Suppliers")]
     [Route("api/[controller]")]
     [ApiController]
-    public class SupplierController : ControllerBase
+    public class SuppliersController : ControllerBase
     {
         #region Injection
         private readonly ISupplierRepository _supplierRepository;
-        private readonly ILogger<SupplierController> _logger;
+        private readonly ILogger<SuppliersController> _logger;
         private readonly IMapper _mapper;
-        public SupplierController(
+        public SuppliersController(
             ISupplierRepository supplierRepository,
-            ILogger<SupplierController> logger,
+            ILogger<SuppliersController> logger,
             IMapper mapper
             )
         {

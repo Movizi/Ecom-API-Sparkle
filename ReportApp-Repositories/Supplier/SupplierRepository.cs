@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportApp_Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportApp_Repositories.Suppliers
 {
@@ -20,7 +15,7 @@ namespace ReportApp_Repositories.Suppliers
 
         public IEnumerable<Supplier> GetAll()
         {
-            return _context.Suppliers.ToList();
+            return _context.Suppliers;
         }
 
         public Supplier GetSupplierById(int id)
@@ -41,8 +36,8 @@ namespace ReportApp_Repositories.Suppliers
         }
         public void DeleteSupplier(int id)
         {
-            var supplier = _context.Categories.Find(id);
-            _context.Categories.Remove(supplier);
+            Supplier supplier = _context.Suppliers.Find(id);
+            _context.Suppliers.Remove(supplier);
             _context.SaveChanges();
         }
 

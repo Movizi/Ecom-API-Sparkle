@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportApp-API", "ReportApp-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportApp-Models", "ReportApp-Models\ReportApp-Models.csproj", "{3FA8CF6E-A6B3-405F-B1FA-82B872D09991}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportApp-Repositories", "ReportApp-Repositories\ReportApp-Repositories.csproj", "{876D6901-1103-43D9-8DBD-E1FE40A2C0A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReportApp-Repositories", "ReportApp-Repositories\ReportApp-Repositories.csproj", "{876D6901-1103-43D9-8DBD-E1FE40A2C0A8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AC170B78-3FF9-4A94-8D05-654B9F3C0EAF}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

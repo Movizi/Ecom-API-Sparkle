@@ -5,6 +5,7 @@ using ReportApp_Repositories;
 using ReportApp_Repositories.Categories;
 using ReportApp_Repositories.Employees;
 using ReportApp_Repositories.Products;
+using ReportApp_Repositories.Shippers;
 using ReportApp_Repositories.Suppliers;
 using System;
 using System.Reflection;
@@ -53,6 +54,7 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IShipperRepository, ShipperRepository>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -62,11 +64,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseSwagger();
-    app.UseSwagger(options =>
-    {
-        options.SerializeAsV2 = true;
-    });
+    app.UseSwagger();
     app.UseSwaggerUI();
 }
 

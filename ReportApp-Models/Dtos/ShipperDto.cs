@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReportApp_Models
+namespace ReportApp_Models.Dtos
 {
-    public class Shipper
+    public class ShipperDto
     {
-        [Key]
-        public int ShipperID { get; set; }
         public string CompanyName { get; set; }
         public string Phone { get; set; }
     }

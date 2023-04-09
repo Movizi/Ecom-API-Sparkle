@@ -9,6 +9,7 @@ namespace ReportApp_Repositories
         DbSet<Employee> Employees { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<Supplier> Suppliers { get; set; }
+        DbSet<Shipper> Shippers { get; set; }
 
         void SaveChanges();
         void SetEntityState<T>(T entity, EntityState state) where T : class;
