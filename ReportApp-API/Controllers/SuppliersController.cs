@@ -26,6 +26,10 @@ namespace ReportApp_API.Controllers
         }
         #endregion
 
+        /// <summary>
+        /// Get all suppliers
+        /// </summary>
+        /// <returns>List of suppliers</returns>
         // GET: api/Supplier
         [HttpGet]
         public IEnumerable<Supplier> GetSuppliers()
@@ -33,6 +37,11 @@ namespace ReportApp_API.Controllers
             return _supplierRepository.GetAll();
         }
 
+        /// <summary>
+        /// Get a specific supplier by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Supplier</returns>
         // GET: api/Supplier/5
         [HttpGet("{id}")]
         public ActionResult<Supplier> GetSupplierById(int id)
@@ -47,6 +56,11 @@ namespace ReportApp_API.Controllers
             return supplier;
         }
 
+        /// <summary>
+        /// Create a new supplier
+        /// </summary>
+        /// <param name="supplier"></param>
+        /// <returns>Product</returns>
         // POST: api/Supplier
         [HttpPost]
         public ActionResult<Supplier> CreateSupplier([FromBody] Supplier supplier)
@@ -76,9 +90,15 @@ namespace ReportApp_API.Controllers
 
         }
 
+        /// <summary>
+        /// Update existing supplier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="supplier"></param>
+        /// <returns>Supplier</returns>
         // PUT: api/Supplier/5
         [HttpPut("{id}")]
-        public IActionResult UpdateSupplier(int id, [FromBody] Supplier supplier)
+        public ActionResult<Supplier> UpdateSupplier(int id, [FromBody] Supplier supplier)
         {
             try
             {
@@ -99,7 +119,7 @@ namespace ReportApp_API.Controllers
 
                 _supplierRepository.UpdateSupplier(supplier);
 
-                return NoContent();
+                return Ok(supplier);
             }
             catch (Exception ex)
             {
@@ -108,6 +128,11 @@ namespace ReportApp_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a supplier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Status code</returns>
         // DELETE: api/Supplier/5
         [HttpDelete("{id}")]
         public IActionResult DeleteSupplier(int id)

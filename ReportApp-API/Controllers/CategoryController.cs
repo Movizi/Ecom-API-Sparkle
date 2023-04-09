@@ -39,10 +39,10 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Get a specific category by Id
+        /// Get a specific category by id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Category by Id</returns>
+        /// <returns>Category</returns>
         // GET: api/Category/5
         [HttpGet("{id}")]
         public ActionResult<Category> GetCategory(int id)
@@ -61,7 +61,7 @@ namespace ReportApp_API.Controllers
         /// Create a new category
         /// </summary>
         /// <param name="categoryDto"></param>
-        /// <returns>The newly created category</returns>
+        /// <returns>Category</returns>
         // POST: api/Category
         [HttpPost]
         public ActionResult<Category> CreateCategory([FromBody] CategoryDto categoryDto)
@@ -97,7 +97,7 @@ namespace ReportApp_API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <param name="category"></param>
-        /// <returns>Newly updated category</returns>
+        /// <returns>Category</returns>
         // PUT: api/Category/5
         [HttpPut("{id}")]
         public ActionResult<Category> UpdateCategory(int id, [FromBody] Category category)
@@ -134,7 +134,7 @@ namespace ReportApp_API.Controllers
         /// Delete a category
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>No content</returns>
+        /// <returns>Status code</returns>
         // DELETE: api/Category/5
         [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models.Dtos;
 using ReportApp_Models;
-using ReportApp_Repositories.Categories;
 using ReportApp_Repositories.Shippers;
 
 namespace ReportApp_API.Controllers
@@ -27,9 +26,9 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Get all categories
+        /// Get all shippers
         /// </summary>
-        /// <returns>List of categories</returns>
+        /// <returns>List of shippers</returns>
         // GET: api/Shipper
         [HttpGet]
         public IEnumerable<Shipper> GetShippers()
@@ -38,10 +37,10 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Get a specific Shipper by Id
+        /// Get a specific shipper by id
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>Shipper by Id</returns>
+        /// <returns>Shipper</returns>
         // GET: api/Shipper/5
         [HttpGet("{id}")]
         public ActionResult<Shipper> GetShipper(int id)
@@ -57,10 +56,10 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Create a new Shipper
+        /// Create a new shipper
         /// </summary>
-        /// <param name="ShipperDto"></param>
-        /// <returns>The newly created Shipper</returns>
+        /// <param name="shipperDto"></param>
+        /// <returns>Shipper</returns>
         // POST: api/Shipper
         [HttpPost]
         public ActionResult<Shipper> CreateShipper([FromBody] ShipperDto shipperDto)
@@ -91,11 +90,11 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Update existing Shipper
+        /// Update existing shipper
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="Shipper"></param>
-        /// <returns>Newly updated Shipper</returns>
+        /// <param name="shipper"></param>
+        /// <returns>Shipper</returns>
         // PUT: api/Shipper/5
         [HttpPut("{id}")]
         public ActionResult<Shipper> UpdateShipper(int id, [FromBody] Shipper shipper)
@@ -129,10 +128,10 @@ namespace ReportApp_API.Controllers
         }
 
         /// <summary>
-        /// Delete a Shipper
+        /// Delete a shipper
         /// </summary>
         /// <param name="id"></param>
-        /// <returns>No content</returns>
+        /// <returns>Status code</returns>
         // DELETE: api/Shipper/5
         [HttpDelete("{id}")]
         public IActionResult DeleteShipper(int id)

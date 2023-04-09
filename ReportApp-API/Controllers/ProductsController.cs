@@ -28,14 +28,24 @@ namespace ReportApp_API.Controllers
         }
         #endregion
 
+        /// <summary>
+        /// Get all products
+        /// </summary>
+        /// <returns>List of products</returns>
         // GET: api/Products
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<ProductDto> GetProducts()
         {
             var products = _mapper.Map<List<ProductDto>>(_productRepository.GetAllProducts());
             return products;
         }
-
+        
+        /// <summary>
+        /// Get a specific product by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Product</returns>
         // GET api/Products/5
         [HttpGet("{id}")]
         public Product GetProductsById(int id)
@@ -44,6 +54,11 @@ namespace ReportApp_API.Controllers
             return products;
         }
 
+        /// <summary>
+        /// Get products by category
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns>products with the specified category</returns>
         // GET: api/Products/categoryId
         [HttpGet("{categoryId}")]
         public IEnumerable<Product> GetProductsByCategory(int categoryId)
@@ -52,6 +67,11 @@ namespace ReportApp_API.Controllers
             return products;
         }
 
+        /// <summary>
+        /// Create a new product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns>Product</returns>
         // POST: api/Products
         [HttpPost]
         public ActionResult<Product> CreateProduct([FromBody] Product product)
@@ -80,9 +100,15 @@ namespace ReportApp_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Update existing product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="product"></param>
+        /// <returns>Product</returns>
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public IActionResult UpdateProduct(int id, [FromBody] Product product)
+        public ActionResult<Product> UpdateProduct(int id, [FromBody] Product product)
         {
             try
             {
@@ -103,7 +129,7 @@ namespace ReportApp_API.Controllers
 
                 _productRepository.UpdateProduct(product);
 
-                return NoContent();
+                return Ok(product);
             }
             catch (Exception ex)
             {
@@ -112,6 +138,11 @@ namespace ReportApp_API.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete a product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Status code</returns>
         // DELETE: api/Products/5
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
