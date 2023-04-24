@@ -13,5 +13,6 @@ namespace ReportApp_Repositories
 
         void SaveChanges();
         void SetEntityState<T>(T entity, EntityState state) where T : class;
+        string ConnectionString();
     }
 }
