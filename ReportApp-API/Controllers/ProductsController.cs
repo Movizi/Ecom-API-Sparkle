@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models;
 using ReportApp_Models.Dtos;
@@ -10,6 +11,7 @@ namespace ReportApp_API.Controllers
     [Tags("Part II: Products")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : Controller
     {
         #region Injection

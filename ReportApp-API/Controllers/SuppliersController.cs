@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models;
 using ReportApp_Repositories.Suppliers;
@@ -8,6 +9,7 @@ namespace ReportApp_API.Controllers
     [Tags("Part III: Suppliers")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SuppliersController : ControllerBase
     {
         #region Injection

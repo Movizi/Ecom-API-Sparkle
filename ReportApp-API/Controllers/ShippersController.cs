@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models.Dtos;
 using ReportApp_Models;
 using ReportApp_Repositories.Shippers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ReportApp_API.Controllers
 {
     [Tags("Part IV: Shippers")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ShippersController : ControllerBase
     {
         private readonly IShipperRepository _shipperRepository;
