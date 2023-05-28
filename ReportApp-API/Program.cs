@@ -9,6 +9,7 @@ using ReportApp_Models.Account;
 using ReportApp_Repositories;
 using ReportApp_Repositories.Categories;
 using ReportApp_Repositories.Employees;
+using ReportApp_Repositories.Orders;
 using ReportApp_Repositories.Products;
 using ReportApp_Repositories.Shippers;
 using ReportApp_Repositories.Suppliers;
@@ -118,6 +119,7 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IShipperRepository, ShipperRepository>();
+builder.Services.AddScoped<IOrdersRepository, OrdersRepository>();
 
 // AutoMapper
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
