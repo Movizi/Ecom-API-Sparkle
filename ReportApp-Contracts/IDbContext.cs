@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportApp_Models;
 
-namespace ReportApp_Repositories
+namespace ReportApp_Contracts
 {
     public interface IDbContext
     {

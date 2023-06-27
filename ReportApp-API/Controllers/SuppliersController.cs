@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models;
-using ReportApp_Repositories.Suppliers;
+using ReportApp_Contracts;
 
 namespace ReportApp_API.Controllers
 {

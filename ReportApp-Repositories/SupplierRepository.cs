@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReportApp_Contracts;
 using ReportApp_Models;
 
-namespace ReportApp_Repositories.Suppliers
+
+namespace ReportApp_Repositories
 {
     public class SupplierRepository : ISupplierRepository
     {

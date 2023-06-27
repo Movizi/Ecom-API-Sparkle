@@ -2,13 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ReportApp_Models;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
-using System.Runtime.InteropServices;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using ReportApp_Contracts;
 
-namespace ReportApp_Repositories.Orders
+namespace ReportApp_Repositories
 {
     public class OrdersRepository : IOrdersRepository
     {
@@ -29,7 +27,7 @@ namespace ReportApp_Repositories.Orders
         {
             var connection = new SqlConnection(_connectionsString);
 
-            var result = connection.Query<Order>("GetOrders", commandType: System.Data.CommandType.StoredProcedure).ToList();
+            var result = connection.Query<Order>("GetOrders", commandType: CommandType.StoredProcedure).ToList();
 
             return result;
         }
@@ -41,7 +39,7 @@ namespace ReportApp_Repositories.Orders
             param.Add("@OrderId", id);
             param.Add("@JsonData", dbType: DbType.String, size: 4000, direction: ParameterDirection.Output);
 
-            connection.Execute("GetOrderDetails", param: param, commandType: System.Data.CommandType.StoredProcedure);
+            connection.Execute("GetOrderDetails", param: param, commandType: CommandType.StoredProcedure);
 
             var result = param.Get<string>("@JsonData");
 

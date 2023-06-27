@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ReportApp-Contracts\ReportApp-Contracts.csproj" />
     <ProjectReference Include="..\ReportApp-Models\ReportApp-Models.csproj" />
   </ItemGroup>
 

@@ -1,12 +1,8 @@
 ﻿using ReportApp_Models.Reports;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReportApp_Contracts;
 
-namespace ReportApp_Repositories.Reports
+namespace ReportApp_Repositories
 {
     public class ReportsRepository : IReportsRepository
     {

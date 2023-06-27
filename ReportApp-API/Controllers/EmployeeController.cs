@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models;
-using ReportApp_Repositories.Categories;
-using ReportApp_Repositories.Employees;
+using ReportApp_Contracts;
 
 namespace ReportApp_API.Controllers
 {
@@ -13,11 +12,11 @@ namespace ReportApp_API.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly ILogger<EmployeeController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         public EmployeeController(
             IEmployeeRepository employeeRepository,
-            ILogger<EmployeeController> logger,
+            ILoggerManager logger,
             IMapper mapper
             )
         {

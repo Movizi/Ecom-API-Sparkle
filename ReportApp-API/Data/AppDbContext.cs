@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportApp_Models;
-using ReportApp_Repositories;
+using ReportApp_Contracts;
 
 namespace ReportApp_API.Data
 {

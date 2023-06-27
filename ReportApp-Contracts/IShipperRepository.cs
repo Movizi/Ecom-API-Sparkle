@@ -1,6 +1,6 @@
 ﻿using ReportApp_Models;
 
-namespace ReportApp_Repositories.Shippers
+namespace ReportApp_Contracts
 {
     public interface IShipperRepository
     {

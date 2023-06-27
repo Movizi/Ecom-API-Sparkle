@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
-using ReportApp_Repositories.Orders;
+using ReportApp_Contracts;
 
 namespace ReportApp_API.Controllers
 {

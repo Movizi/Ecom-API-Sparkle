@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using ReportApp_Contracts;
 using ReportApp_Models;
 using ReportApp_Models.Dtos;
-using ReportApp_Models.Profiles;
-using ReportApp_Repositories.Categories;
 
 namespace ReportApp_API.Controllers
 {
@@ -16,11 +14,11 @@ namespace ReportApp_API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly ILogger<CategoryController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         public CategoryController(
             ICategoryRepository categoryRepository,
-            ILogger<CategoryController> logger,
+            ILoggerManager logger,
             IMapper mapper
             )
         {
@@ -49,10 +47,12 @@ namespace ReportApp_API.Controllers
         [HttpGet("{id}")]
         public ActionResult<Category> GetCategory(int id)
         {
+            var methodName = nameof(GetCategory);
             var category = _categoryRepository.GetCategoryById(id);
 
             if (category == null)
             {
+                _logger.LogWarn($"{methodName} => Category not found");
                 return NotFound();
             }
 
@@ -68,15 +68,18 @@ namespace ReportApp_API.Controllers
         [HttpPost]
         public ActionResult<Category> CreateCategory([FromBody] CategoryDto categoryDto)
         {
+            var methodName = nameof(CreateCategory);
             try
             {
                 if (categoryDto == null)
                 {
+                    _logger.LogWarn($"{methodName} => category object is null");
                     return BadRequest("category object is null");
                 }
 
                 if (!ModelState.IsValid)
                 {
+                    _logger.LogWarn($"{methodName} => Invalid model Object");
                     return BadRequest("Invalid model Object");
                 }
 
@@ -88,7 +91,7 @@ namespace ReportApp_API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception: {ex}");
+                _logger.LogError($"{methodName} => Exception: {ex}");
                 return StatusCode(500, $"Internal server error {ex}");
             }
 
@@ -104,20 +107,24 @@ namespace ReportApp_API.Controllers
         [HttpPut("{id}")]
         public ActionResult<Category> UpdateCategory(int id, [FromBody] Category category)
         {
+            var methodName = nameof(UpdateCategory);
             try
             {
                 if (id != category.CategoryID)
                 {
+                    _logger.LogWarn($"{methodName} => id and CategoryID must be the same");
                     return BadRequest("id and CategoryID must be the same");
                 }
 
                 if (category == null)
                 {
+                    _logger.LogWarn($"{methodName} => category object is null");
                     return BadRequest("category object is null");
                 }
 
                 if (!ModelState.IsValid)
                 {
+                    _logger.LogWarn($"{methodName} => Invalid model Object");
                     return BadRequest("Invalid model Object");
                 }
 
@@ -127,7 +134,7 @@ namespace ReportApp_API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception: {ex}");
+                _logger.LogError($"{methodName} => Exception: {ex}");
                 return StatusCode(500, $"Internal server error {ex}");
             }
         }
@@ -141,16 +148,19 @@ namespace ReportApp_API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteCategory(int id)
         {
+            var methodName = nameof(DeleteCategory);
             try
             {
                 if (id == 0)
                 {
+                    _logger.LogWarn($"{methodName} => Id must be valid");
                     return BadRequest("Id must be valid");
                 }
                 var category = _categoryRepository.GetCategoryById(id);
 
                 if (category == null)
                 {
+                    _logger.LogWarn($"{methodName} => Can't find category");
                     return NotFound("Can't find category");
                 }
 
@@ -160,7 +170,7 @@ namespace ReportApp_API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception: {ex}");
+                _logger.LogError($"{methodName} => Exception: {ex}");
                 return StatusCode(500, $"Internal server error {ex}");
             }
         }

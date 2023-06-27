@@ -1,6 +1,6 @@
 ﻿using ReportApp_Models;
 
-namespace ReportApp_Repositories.Suppliers
+namespace ReportApp_Contracts
 {
     public interface ISupplierRepository
     {

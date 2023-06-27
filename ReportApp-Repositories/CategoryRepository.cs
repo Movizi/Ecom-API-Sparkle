@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ReportApp_Contracts;
 using ReportApp_Models;
-using System.IO.Compression;
-using System.Text;
 
-namespace ReportApp_Repositories.Categories
+namespace ReportApp_Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -32,7 +31,7 @@ namespace ReportApp_Repositories.Categories
 
         public void UpdateCategory(Category category)
         {
-            _context.SetEntityState(category,EntityState.Modified);
+            _context.SetEntityState(category, EntityState.Modified);
             _context.SaveChanges();
         }
 

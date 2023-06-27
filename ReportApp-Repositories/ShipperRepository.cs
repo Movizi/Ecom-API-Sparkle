@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportApp_Models;
+using ReportApp_Contracts;
 
-namespace ReportApp_Repositories.Shippers
+namespace ReportApp_Repositories
 {
     public class ShipperRepository : IShipperRepository
     {

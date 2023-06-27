@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models;
 using ReportApp_Models.Dtos;
-using ReportApp_Repositories.Categories;
-using ReportApp_Repositories.Products;
+using ReportApp_Contracts;
 
 namespace ReportApp_API.Controllers
 {
@@ -16,11 +15,11 @@ namespace ReportApp_API.Controllers
     {
         #region Injection
         private readonly IProductRepository _productRepository;
-        private readonly ILogger<CategoryController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         public ProductsController(
             IProductRepository productRepository,
-            ILogger<CategoryController> logger,
+            ILoggerManager logger,
             IMapper mapper
             )
         {
@@ -36,7 +35,6 @@ namespace ReportApp_API.Controllers
         /// <returns>List of products</returns>
         // GET: api/Products
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public IEnumerable<ProductDto> GetProducts()
         {
             var products = _mapper.Map<List<ProductDto>>(_productRepository.GetAllProducts());

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ReportApp_Models.Dtos;
 using ReportApp_Models;
-using ReportApp_Repositories.Shippers;
+using ReportApp_Contracts;
 using Microsoft.AspNetCore.Authorization;
 
 namespace ReportApp_API.Controllers

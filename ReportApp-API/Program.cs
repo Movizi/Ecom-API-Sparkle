@@ -4,20 +4,21 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
 using ReportApp_API.Data;
+using ReportApp_Contracts;
+using ReportApp_LoggerService;
 using ReportApp_Models.Account;
 using ReportApp_Repositories;
-using ReportApp_Repositories.Categories;
-using ReportApp_Repositories.Employees;
-using ReportApp_Repositories.Orders;
-using ReportApp_Repositories.Products;
-using ReportApp_Repositories.Shippers;
-using ReportApp_Repositories.Suppliers;
 using System;
 using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Logger (NLOG)
+LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+builder.Services.AddSingleton<ILoggerManager, LoggerManager>();
 
 // Context
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

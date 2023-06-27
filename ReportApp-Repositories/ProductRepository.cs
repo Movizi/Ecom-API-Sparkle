@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportApp_Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+using ReportApp_Contracts;
 
-namespace ReportApp_Repositories.Products
+namespace ReportApp_Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -30,7 +25,7 @@ namespace ReportApp_Repositories.Products
                 .ToList();
         }
 
-        public Product GetProductById(int productId) 
+        public Product GetProductById(int productId)
         {
             return _context.Products.FirstOrDefault(x => x.ProductID == productId);
         }
