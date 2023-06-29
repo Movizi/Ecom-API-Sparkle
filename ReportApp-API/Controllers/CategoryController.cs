@@ -69,31 +69,23 @@ namespace ReportApp_API.Controllers
         public ActionResult<Category> CreateCategory([FromBody] CategoryDto categoryDto)
         {
             var methodName = nameof(CreateCategory);
-            try
+            if (categoryDto == null)
             {
-                if (categoryDto == null)
-                {
-                    _logger.LogWarn($"{methodName} => category object is null");
-                    return BadRequest("category object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogWarn($"{methodName} => Invalid model Object");
-                    return BadRequest("Invalid model Object");
-                }
-
-                var category = _mapper.Map<Category>(categoryDto);
-
-                _categoryRepository.AddCategory(category);
-
-                return CreatedAtAction(nameof(CreateCategory), new { id = category.CategoryID }, category);
+                _logger.LogWarn($"{methodName} => category object is null");
+                return BadRequest("category object is null");
             }
-            catch (Exception ex)
+
+            if (!ModelState.IsValid)
             {
-                _logger.LogError($"{methodName} => Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Invalid model Object");
+                return BadRequest("Invalid model Object");
             }
+
+            var category = _mapper.Map<Category>(categoryDto);
+
+            _categoryRepository.AddCategory(category);
+
+            return CreatedAtAction(nameof(CreateCategory), new { id = category.CategoryID }, category);
 
         }
 
@@ -108,35 +100,28 @@ namespace ReportApp_API.Controllers
         public ActionResult<Category> UpdateCategory(int id, [FromBody] Category category)
         {
             var methodName = nameof(UpdateCategory);
-            try
+            if (id != category.CategoryID)
             {
-                if (id != category.CategoryID)
-                {
-                    _logger.LogWarn($"{methodName} => id and CategoryID must be the same");
-                    return BadRequest("id and CategoryID must be the same");
-                }
-
-                if (category == null)
-                {
-                    _logger.LogWarn($"{methodName} => category object is null");
-                    return BadRequest("category object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    _logger.LogWarn($"{methodName} => Invalid model Object");
-                    return BadRequest("Invalid model Object");
-                }
-
-                _categoryRepository.UpdateCategory(category);
-
-                return Ok(category);
+                _logger.LogWarn($"{methodName} => id and CategoryID must be the same");
+                return BadRequest("id and CategoryID must be the same");
             }
-            catch (Exception ex)
+
+            if (category == null)
             {
-                _logger.LogError($"{methodName} => Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => category object is null");
+                return BadRequest("category object is null");
             }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarn($"{methodName} => Invalid model Object");
+                return BadRequest("Invalid model Object");
+            }
+
+            _categoryRepository.UpdateCategory(category);
+
+            return Ok(category);
+
         }
 
         /// <summary>
@@ -149,30 +134,23 @@ namespace ReportApp_API.Controllers
         public IActionResult DeleteCategory(int id)
         {
             var methodName = nameof(DeleteCategory);
-            try
+
+            if (id == 0)
             {
-                if (id == 0)
-                {
-                    _logger.LogWarn($"{methodName} => Id must be valid");
-                    return BadRequest("Id must be valid");
-                }
-                var category = _categoryRepository.GetCategoryById(id);
-
-                if (category == null)
-                {
-                    _logger.LogWarn($"{methodName} => Can't find category");
-                    return NotFound("Can't find category");
-                }
-
-                _categoryRepository.DeleteCategory(id);
-
-                return NoContent();
+                _logger.LogWarn($"{methodName} => Id must be valid");
+                return BadRequest("Id must be valid");
             }
-            catch (Exception ex)
+            var category = _categoryRepository.GetCategoryById(id);
+
+            if (category == null)
             {
-                _logger.LogError($"{methodName} => Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Can't find category");
+                return NotFound("Can't find category");
             }
+
+            _categoryRepository.DeleteCategory(id);
+
+            return NoContent();
         }
     }
 }
