@@ -14,11 +14,11 @@ namespace ReportApp_API.Controllers
     public class ShippersController : ControllerBase
     {
         private readonly IShipperRepository _shipperRepository;
-        private readonly ILogger<ShippersController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         public ShippersController(
             IShipperRepository shipperRepository,
-            ILogger<ShippersController> logger,
+            ILoggerManager logger,
             IMapper mapper
             )
         {
@@ -33,9 +33,10 @@ namespace ReportApp_API.Controllers
         /// <returns>List of shippers</returns>
         // GET: api/Shipper
         [HttpGet]
-        public IEnumerable<Shipper> GetShippers()
+        public IActionResult GetShippers()
         {
-            return _shipperRepository.GetAll();
+            var shippers = _shipperRepository.GetAll();
+            return Ok(shippers);
         }
 
         /// <summary>
@@ -45,7 +46,7 @@ namespace ReportApp_API.Controllers
         /// <returns>Shipper</returns>
         // GET: api/Shipper/5
         [HttpGet("{id}")]
-        public ActionResult<Shipper> GetShipper(int id)
+        public IActionResult GetShipper(int id)
         {
             var Shipper = _shipperRepository.GetShipperById(id);
 
@@ -54,7 +55,7 @@ namespace ReportApp_API.Controllers
                 return NotFound();
             }
 
-            return Shipper;
+            return Ok(Shipper);
         }
 
         /// <summary>
@@ -64,31 +65,21 @@ namespace ReportApp_API.Controllers
         /// <returns>Shipper</returns>
         // POST: api/Shipper
         [HttpPost]
-        public ActionResult<Shipper> CreateShipper([FromBody] ShipperDto shipperDto)
+        public IActionResult CreateShipper([FromBody] ShipperDto shipperDto)
         {
-            try
+            var methodName = nameof(CreateShipper);
+
+            if (shipperDto == null)
             {
-                if (shipperDto == null)
-                {
-                    return BadRequest("Shipper object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-                var shipper = _mapper.Map<Shipper>(shipperDto);
-
-                _shipperRepository.AddShipper(shipper);
-
-                return CreatedAtAction(nameof(CreateShipper), new { id = shipper.ShipperID }, shipper);
+                _logger.LogWarn($"{methodName} => Shipper object is null");
+                return BadRequest("Shipper object is null");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
-            }
+
+            var shipper = _mapper.Map<Shipper>(shipperDto);
+
+            _shipperRepository.AddShipper(shipper);
+
+            return CreatedAtAction(nameof(CreateShipper), new { id = shipper.ShipperID }, shipper);
         }
 
         /// <summary>
@@ -99,34 +90,25 @@ namespace ReportApp_API.Controllers
         /// <returns>Shipper</returns>
         // PUT: api/Shipper/5
         [HttpPut("{id}")]
-        public ActionResult<Shipper> UpdateShipper(int id, [FromBody] Shipper shipper)
+        public IActionResult UpdateShipper(int id, [FromBody] Shipper shipper)
         {
-            try
+            var methodName = nameof(UpdateShipper);
+
+            if (id != shipper.ShipperID)
             {
-                if (id != shipper.ShipperID)
-                {
-                    return BadRequest("id and ShipperID must be the same");
-                }
-
-                if (shipper == null)
-                {
-                    return BadRequest("Shipper object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-                _shipperRepository.UpdateShipper(shipper);
-
-                return Ok(shipper);
+                _logger.LogWarn($"{methodName} => Id and ShipperID must be the same");
+                return BadRequest("Id and ShipperID must be the same");
             }
-            catch (Exception ex)
+
+            if (shipper == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Shipper object is null");
+                return BadRequest("Shipper object is null");
             }
+
+            _shipperRepository.UpdateShipper(shipper);
+
+            return Ok(shipper);
         }
 
         /// <summary>
@@ -138,28 +120,23 @@ namespace ReportApp_API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteShipper(int id)
         {
-            try
+            var methodName = nameof(DeleteShipper);
+            if (id == 0)
             {
-                if (id == 0)
-                {
-                    return BadRequest("Id must be valid");
-                }
-                var Shipper = _shipperRepository.GetShipperById(id);
-
-                if (Shipper == null)
-                {
-                    return NotFound("Can't find Shipper");
-                }
-
-                _shipperRepository.DeleteShipper(id);
-
-                return NoContent();
+                _logger.LogWarn($"{methodName} => Id must be valid");
+                return BadRequest("Id must be valid");
             }
-            catch (Exception ex)
+            var Shipper = _shipperRepository.GetShipperById(id);
+
+            if (Shipper == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Can't find Shipper");
+                return NotFound("Can't find Shipper");
             }
+
+            _shipperRepository.DeleteShipper(id);
+
+            return NoContent();
         }
     }
 }

@@ -75,12 +75,6 @@ namespace ReportApp_API.Controllers
                 return BadRequest("category object is null");
             }
 
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarn($"{methodName} => Invalid model Object");
-                return BadRequest("Invalid model Object");
-            }
-
             var category = _mapper.Map<Category>(categoryDto);
 
             _categoryRepository.AddCategory(category);
@@ -110,12 +104,6 @@ namespace ReportApp_API.Controllers
             {
                 _logger.LogWarn($"{methodName} => category object is null");
                 return BadRequest("category object is null");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarn($"{methodName} => Invalid model Object");
-                return BadRequest("Invalid model Object");
             }
 
             _categoryRepository.UpdateCategory(category);

@@ -35,12 +35,13 @@ namespace ReportApp_API.Controllers
         /// <returns>List of products</returns>
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<ProductDto> GetProducts()
+        public IActionResult GetProducts()
         {
-            var products = _mapper.Map<List<ProductDto>>(_productRepository.GetAllProducts());
-            return products;
+            var result = _productRepository.GetAllProducts();
+            var products = _mapper.Map<List<ProductDto>>(result);
+            return Ok(products);
         }
-        
+
         /// <summary>
         /// Get a specific product by id
         /// </summary>
@@ -48,10 +49,16 @@ namespace ReportApp_API.Controllers
         /// <returns>Product</returns>
         // GET api/Products/5
         [HttpGet("{id}")]
-        public Product GetProductsById(int id)
+        public IActionResult GetProductById(int id)
         {
-            var products = _productRepository.GetProductById(id);
-            return products;
+            var product = _productRepository.GetProductById(id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
         }
 
         /// <summary>
@@ -61,10 +68,11 @@ namespace ReportApp_API.Controllers
         /// <returns>products with the specified category</returns>
         // GET: api/Products/categoryId
         [HttpGet("{categoryId}")]
-        public IEnumerable<Product> GetProductsByCategory(int categoryId)
+        public IActionResult GetProductsByCategory(int categoryId)
         {
-            var products = _productRepository.GetProductsByCategory(categoryId);
-            return products;
+            var result = _productRepository.GetProductsByCategory(categoryId);
+            var products = _mapper.Map<List<ProductDto>>(result);
+            return Ok(products);
         }
 
         /// <summary>
@@ -74,30 +82,16 @@ namespace ReportApp_API.Controllers
         /// <returns>Product</returns>
         // POST: api/Products
         [HttpPost]
-        public ActionResult<Product> CreateProduct([FromBody] Product product)
+        public IActionResult CreateProduct([FromBody] Product product)
         {
-            try
+            if (product == null)
             {
-                if (product == null)
-                {
-                    return BadRequest("category object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-
-                _productRepository.AddProduct(product);
-
-                return CreatedAtAction(nameof(CreateProduct), new { id = product.ProductID }, product);
+                return BadRequest("category object is null");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
-            }
+
+            _productRepository.AddProduct(product);
+
+            return CreatedAtAction(nameof(CreateProduct), new { id = product.ProductID }, product);
         }
 
         /// <summary>
@@ -108,34 +102,21 @@ namespace ReportApp_API.Controllers
         /// <returns>Product</returns>
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public ActionResult<Product> UpdateProduct(int id, [FromBody] Product product)
+        public IActionResult UpdateProduct(int id, [FromBody] Product product)
         {
-            try
+            if (id != product.ProductID)
             {
-                if (id != product.ProductID)
-                {
-                    return BadRequest("id and CategoryID must be the same");
-                }
-
-                if (product == null)
-                {
-                    return BadRequest("category object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-                _productRepository.UpdateProduct(product);
-
-                return Ok(product);
+                return BadRequest("id and CategoryID must be the same");
             }
-            catch (Exception ex)
+
+            if (product == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                return BadRequest("category object is null");
             }
+
+            _productRepository.UpdateProduct(product);
+
+            return Ok(product);
         }
 
         /// <summary>
@@ -147,28 +128,21 @@ namespace ReportApp_API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(int id)
         {
-            try
+            if (id == 0)
             {
-                if (id == 0)
-                {
-                    return BadRequest("Id must be valid");
-                }
-                var category = _productRepository.GetProductById(id);
-
-                if (category == null)
-                {
-                    return NotFound("Can't find category");
-                }
-
-                _productRepository.DeleteProduct(id);
-
-                return NoContent();
+                return BadRequest("Id must be valid");
             }
-            catch (Exception ex)
+
+            var category = _productRepository.GetProductById(id);
+
+            if (category == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                return NotFound("Can't find category");
             }
+
+            _productRepository.DeleteProduct(id);
+
+            return NoContent();
         }
     }
 }

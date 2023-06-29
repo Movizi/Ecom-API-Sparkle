@@ -14,11 +14,11 @@ namespace ReportApp_API.Controllers
     {
         #region Injection
         private readonly ISupplierRepository _supplierRepository;
-        private readonly ILogger<SuppliersController> _logger;
+        private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         public SuppliersController(
             ISupplierRepository supplierRepository,
-            ILogger<SuppliersController> logger,
+            ILoggerManager logger,
             IMapper mapper
             )
         {
@@ -34,9 +34,10 @@ namespace ReportApp_API.Controllers
         /// <returns>List of suppliers</returns>
         // GET: api/Supplier
         [HttpGet]
-        public IEnumerable<Supplier> GetSuppliers()
+        public IActionResult GetSuppliers()
         {
-            return _supplierRepository.GetAll();
+            var suppliers = _supplierRepository.GetAll();
+            return Ok(suppliers);
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace ReportApp_API.Controllers
         /// <returns>Supplier</returns>
         // GET: api/Supplier/5
         [HttpGet("{id}")]
-        public ActionResult<Supplier> GetSupplierById(int id)
+        public IActionResult GetSupplierById(int id)
         {
             var supplier = _supplierRepository.GetSupplierById(id);
 
@@ -55,7 +56,7 @@ namespace ReportApp_API.Controllers
                 return NotFound();
             }
 
-            return supplier;
+            return Ok(supplier);
         }
 
         /// <summary>
@@ -65,30 +66,19 @@ namespace ReportApp_API.Controllers
         /// <returns>Product</returns>
         // POST: api/Supplier
         [HttpPost]
-        public ActionResult<Supplier> CreateSupplier([FromBody] Supplier supplier)
+        public IActionResult CreateSupplier([FromBody] Supplier supplier)
         {
-            try
+            var methodName = nameof(CreateSupplier);
+
+            if (supplier == null)
             {
-                if (supplier == null)
-                {
-                    return BadRequest("supplier object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-
-                _supplierRepository.AddSupplier(supplier);
-
-                return CreatedAtAction(nameof(CreateSupplier), new { id = supplier.SupplierID}, supplier);
+                _logger.LogWarn($"{methodName} => Supplier object is null");
+                return BadRequest("Supplier object is null");
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
-            }
+
+            _supplierRepository.AddSupplier(supplier);
+
+            return CreatedAtAction(nameof(CreateSupplier), new { id = supplier.SupplierID }, supplier);
 
         }
 
@@ -100,34 +90,25 @@ namespace ReportApp_API.Controllers
         /// <returns>Supplier</returns>
         // PUT: api/Supplier/5
         [HttpPut("{id}")]
-        public ActionResult<Supplier> UpdateSupplier(int id, [FromBody] Supplier supplier)
+        public IActionResult UpdateSupplier(int id, [FromBody] Supplier supplier)
         {
-            try
+            var methodName = nameof(UpdateSupplier);
+
+            if (id != supplier.SupplierID)
             {
-                if (id != supplier.SupplierID)
-                {
-                    return BadRequest("id and SupplierID must be the same");
-                }
-
-                if (supplier == null)
-                {
-                    return BadRequest("supplier object is null");
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest("Invalid model Object");
-                }
-
-                _supplierRepository.UpdateSupplier(supplier);
-
-                return Ok(supplier);
+                _logger.LogWarn($"{methodName} => Id and SupplierID must be the same");
+                return BadRequest("Id and SupplierID must be the same");
             }
-            catch (Exception ex)
+
+            if (supplier == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Supplier object is null");
+                return BadRequest("Supplier object is null");
             }
+
+            _supplierRepository.UpdateSupplier(supplier);
+
+            return Ok(supplier);
         }
 
         /// <summary>
@@ -139,28 +120,24 @@ namespace ReportApp_API.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteSupplier(int id)
         {
-            try
+            var methodName = nameof(DeleteSupplier);
+
+            if (id == 0)
             {
-                if (id == 0)
-                {
-                    return BadRequest("Id must be valid");
-                }
-                var supplier = _supplierRepository.GetSupplierById(id);
-
-                if (supplier == null)
-                {
-                    return NotFound("Can't find suppleir");
-                }
-
-                _supplierRepository.DeleteSupplier(id);
-
-                return NoContent();
+                _logger.LogWarn($"{methodName} => Id must be valid");
+                return BadRequest("Id must be valid");
             }
-            catch (Exception ex)
+            var supplier = _supplierRepository.GetSupplierById(id);
+
+            if (supplier == null)
             {
-                _logger.LogError($"Exception: {ex}");
-                return StatusCode(500, $"Internal server error {ex}");
+                _logger.LogWarn($"{methodName} => Can't find suppleir");
+                return NotFound("Can't find suppleir");
             }
+
+            _supplierRepository.DeleteSupplier(id);
+
+            return NoContent();
         }
     }
 }
